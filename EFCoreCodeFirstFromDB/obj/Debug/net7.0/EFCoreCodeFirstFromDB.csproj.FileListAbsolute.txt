@@ -1,0 +1,15 @@
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\bin\Debug\net7.0\EFCoreCodeFirstFromDB.exe
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\bin\Debug\net7.0\EFCoreCodeFirstFromDB.deps.json
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\bin\Debug\net7.0\EFCoreCodeFirstFromDB.runtimeconfig.json
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\bin\Debug\net7.0\EFCoreCodeFirstFromDB.dll
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\bin\Debug\net7.0\EFCoreCodeFirstFromDB.pdb
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.csproj.AssemblyReference.cache
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.AssemblyInfoInputs.cache
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.AssemblyInfo.cs
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.csproj.CoreCompileInputs.cache
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.dll
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\refint\EFCoreCodeFirstFromDB.dll
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.pdb
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\EFCoreCodeFirstFromDB.genruntimeconfig.cache
+C:\Users\engmt\source\repos\ASPNETMVCMinia07\EFCoreCodeFirstFromDB\obj\Debug\net7.0\ref\EFCoreCodeFirstFromDB.dll
