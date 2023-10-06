@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 //using System.Data.Entity; //Legacy ef 6
@@ -28,6 +29,10 @@ namespace TryEFCore
             base.OnConfiguring(optionsBuilder);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Blog>().Property(b => b.Url).IsRequired();
+        }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Blog> Blogs { get; set; }
 
