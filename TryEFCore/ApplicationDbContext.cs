@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.Data.Entity; //Legacy ef 6
 using Microsoft.EntityFrameworkCore;
+using TryEFCore.Configurations;
 using TryEFCore.Models;
 
 namespace TryEFCore
@@ -31,7 +32,8 @@ namespace TryEFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>().Property(b => b.Url).IsRequired();
+            //new BlogEntityTypeConfiguration().Configure(modelBuilder.Entity<Blog>());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogEntityTypeConfiguration).Assembly);
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Blog> Blogs { get; set; }
