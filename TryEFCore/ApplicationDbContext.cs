@@ -29,5 +29,7 @@ namespace TryEFCore
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+
     }
 }

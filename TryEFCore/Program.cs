@@ -1,10 +1,16 @@
-﻿namespace TryEFCore
+﻿using TryEFCore.Models;
+
+namespace TryEFCore
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            var _context = new ApplicationDbContext { };
+            var emp = new Employee { Name = "emp1" };
 
+            _context.Add(emp);
+            _context.SaveChanges();
 
             #region EF Descussion
             //Entity Framework Core 
