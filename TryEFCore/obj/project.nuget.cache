@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "T9w1DnKxQ7xFkupEKkgr3rjjIBx4B6oXI9CRLodqhjMCdL0e4QKLNHBOhOEJz4IxKd8b/9vJrpy+Yxb6JeQW3Q==",
+  "dgSpecHash": "uTlD4zoB86jjTN4yfGo2A/H5MG+PP+E0nZclQNSHUC1brUSB0Xm/VLqgUSr6247gEo1iEot8ARi7xmsvGb11Ow==",
   "success": true,
-  "projectFilePath": "E:\\ITI full stack net\\Entity FrameWork Core\\ASPNETMVCMinia07\\TryEFCore\\TryEFCore.csproj",
+  "projectFilePath": "E:\\ITI full stack net\\Entity FrameWork Core\\tryEFCore\\TryEFCore\\TryEFCore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

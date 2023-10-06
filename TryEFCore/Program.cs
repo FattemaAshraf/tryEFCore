@@ -4,6 +4,8 @@
     {
         static void Main(string[] args)
         {
+
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
