@@ -7,5 +7,6 @@ namespace TryEFCore.Models
         public int Id { get; set; }
         [Required]
         public string Url { get; set; }
+        public List<Post> Posts { get; set; }
     }
 }
