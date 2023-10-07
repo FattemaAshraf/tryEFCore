@@ -51,17 +51,28 @@ namespace TryEFCore
                         .HasColumnName("BlogUrl");
 
             //change typedata of property
-            modelBuilder.Entity<Blog>(e =>
+            /* modelBuilder.Entity<Blog>(e =>
             {
                 e.Property(e => e.Url).HasColumnType("varchar(200)");
                 e.Property(e => e.Rating).HasColumnType("decimal(5,2)");
 
-            });
+            }); */
 
             //adding maxlength
             modelBuilder.Entity<Post>()
                        .Property(b => b.Title)
-                       .HasMaxLength("200");
+                       .HasMaxLength(200);
+
+            //adding comment to column
+            modelBuilder.Entity<Post>()
+                      .Property(b => b.Title)
+                      .HasComment("Hello from Fluent API ");
+
+            //add primary key for book table
+            //modelBuilder.Entity<Book>()
+            //            .HasKey(b => b.bookKey)
+            //            .HasName("PK_bookKey");
+
 
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
@@ -71,6 +82,9 @@ namespace TryEFCore
         public DbSet<Employee> Employees { get; set; }
         //add entity to model navigate on post list and make table (2)
         public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<Book> Books { get; set; }
+
 
     }
 }
