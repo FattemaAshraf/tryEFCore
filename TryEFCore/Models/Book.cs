@@ -9,7 +9,9 @@ namespace TryEFCore.Models
     public class Book
     {
         [Key]
-        public int bookKey { get; set; }
+        public int BookKey { get; set; }
         public string Name { get; set; }
+        public string Author { get; set; }
+
     }
 }

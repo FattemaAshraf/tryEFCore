@@ -68,6 +68,11 @@ namespace TryEFCore
                       .Property(b => b.Title)
                       .HasComment("Hello from Fluent API ");
 
+            //add composite key to not repeat data in name or in authr
+            modelBuilder.Entity<Book>()
+                        .HasKey(b => new { b.Name, b.Author });
+
+
             //add primary key for book table
             //modelBuilder.Entity<Book>()
             //            .HasKey(b => b.bookKey)
