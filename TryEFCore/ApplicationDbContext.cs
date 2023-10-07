@@ -27,6 +27,10 @@ namespace TryEFCore
             modelBuilder.Entity<AuditEntry>();
             //new BlogEntityTypeConfiguration().Configure(modelBuilder.Entity<Blog>());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogEntityTypeConfiguration).Assembly);
+            //for not mapped posts
+            modelBuilder.Ignore<Post>();
+            //exclude table after creating, dont listen on it again
+            modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
