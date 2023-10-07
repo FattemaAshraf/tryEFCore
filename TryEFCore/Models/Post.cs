@@ -1,5 +1,8 @@
-﻿namespace TryEFCore.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TryEFCore.Models
 {
+    [Table("Posts")]
     public class Post
     {
         public int Id { get; set; }
