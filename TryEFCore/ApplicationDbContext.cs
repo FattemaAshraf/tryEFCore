@@ -50,6 +50,19 @@ namespace TryEFCore
                         .Property(b => b.Url)
                         .HasColumnName("BlogUrl");
 
+            //change typedata of property
+            modelBuilder.Entity<Blog>(e =>
+            {
+                e.Property(e => e.Url).HasColumnType("varchar(200)");
+                e.Property(e => e.Rating).HasColumnType("decimal(5,2)");
+
+            });
+
+            //adding maxlength
+            modelBuilder.Entity<Post>()
+                       .Property(b => b.Title)
+                       .HasMaxLength("200");
+
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
 
