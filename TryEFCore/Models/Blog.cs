@@ -12,6 +12,7 @@ namespace TryEFCore.Models
         [Column("BlogUrl", TypeName = "varchar(200)")]
         public string Url { get; set; }
 
+        public DateTime Date { get; set; }
         public string Rating { get; set; }
         public List<Post> Posts { get; set; }
     }

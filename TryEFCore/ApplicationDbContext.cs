@@ -74,10 +74,19 @@ namespace TryEFCore
 
 
             //add primary key for book table
-            //modelBuilder.Entity<Book>()
-            //            .HasKey(b => b.bookKey)
-            //            .HasName("PK_bookKey");
+            modelBuilder.Entity<Book>()
+                        .HasKey(b => b.BookKey)
+                        .HasName("PK_bookKey");
 
+            //add default value
+            modelBuilder.Entity<Blog>()
+                      .Property(b => b.Rating)
+                      .HasDefaultValue(2);
+
+            //add default value sql
+            modelBuilder.Entity<Blog>()
+                    .Property(b => b.Date)
+                    .HasDefaultValueSql("GETDATE()");
 
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
