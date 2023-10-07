@@ -1,5 +1,4 @@
-﻿using TryEFCore.Models;
-
+﻿
 namespace TryEFCore
 {
     internal class Program

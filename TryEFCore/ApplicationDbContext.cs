@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Data.Entity; //Legacy ef 6
-using Microsoft.EntityFrameworkCore;
-using TryEFCore.Configurations;
-using TryEFCore.Models;
+﻿
 
 namespace TryEFCore
 {
