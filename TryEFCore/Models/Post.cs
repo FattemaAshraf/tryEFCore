@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Serialization;
 
 namespace TryEFCore.Models
 {
-    [Table("Posts")]
+    [Table("Posts", Schema = "blogging")]
     public class Post
     {
         public int Id { get; set; }

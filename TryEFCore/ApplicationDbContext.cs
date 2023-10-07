@@ -28,10 +28,20 @@ namespace TryEFCore
             //new BlogEntityTypeConfiguration().Configure(modelBuilder.Entity<Blog>());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogEntityTypeConfiguration).Assembly);
             //for not mapped posts
-            modelBuilder.Ignore<Post>();
+            //modelBuilder.Ignore<Post>();
 
             //to name the table
-            modelBuilder.Entity<Post>().ToTable("Posts");
+            //modelBuilder.Entity<Post>().ToTable("Posts");
+
+            //to add schema 
+            //modelBuilder.Entity<Post>().ToTable("Posts", schema: "blogging");
+
+            //to add schema for any entity
+            modelBuilder.HasDefaultSchema("blogging");
+
+            //mapping on view
+            modelBuilder.Entity<Post>().ToView("selectedPosts", schema: "blogging");
+
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
 
