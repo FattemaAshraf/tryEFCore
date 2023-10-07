@@ -42,6 +42,14 @@ namespace TryEFCore
             //mapping on view
             modelBuilder.Entity<Post>().ToView("selectedPosts", schema: "blogging");
 
+            //not mapping on property
+            modelBuilder.Entity<Post>().Ignore(b => b.Content);
+
+            //name column in database
+            modelBuilder.Entity<Blog>()
+                        .Property(b => b.Url)
+                        .HasColumnName("BlogUrl");
+
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
 
