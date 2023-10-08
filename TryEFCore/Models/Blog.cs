@@ -15,5 +15,6 @@ namespace TryEFCore.Models
         public DateTime Date { get; set; }
         public string Rating { get; set; }
         public List<Post> Posts { get; set; }
+        public BlogImage BlogImage { get; set; }
     }
 }

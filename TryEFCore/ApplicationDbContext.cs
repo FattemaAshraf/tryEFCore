@@ -102,6 +102,12 @@ namespace TryEFCore
                         .Property(b => b.Id)
                         .ValueGeneratedOnAdd();
 
+            //relation one to one
+            modelBuilder.Entity<Blog>()
+                       .HasOne(b => b.BlogImage)
+                       .WithOne(l => l.Blog)
+                       .HasForeignKey<BlogImage>(i => i.BlogForeginKey);
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
