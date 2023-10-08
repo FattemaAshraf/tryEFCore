@@ -6,7 +6,7 @@ namespace TryEFCore
         static void Main(string[] args)
         {
             var _context = new ApplicationDbContext { };
-            var emp = new Employee { Name = "emp1" };
+            var emp = new Employee { FirstName = "Fatma" , LastName="Ashraf"};
 
             _context.Add(emp);
             _context.SaveChanges();

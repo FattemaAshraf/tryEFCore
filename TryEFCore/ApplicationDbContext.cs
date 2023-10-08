@@ -80,13 +80,18 @@ namespace TryEFCore
 
             //add default value
             modelBuilder.Entity<Blog>()
-                      .Property(b => b.Rating)
-                      .HasDefaultValue(2);
+                        .Property(b => b.Rating)
+                        .HasDefaultValue(2);
 
             //add default value sql
             modelBuilder.Entity<Blog>()
-                    .Property(b => b.Date)
-                    .HasDefaultValueSql("GETDATE()");
+                        .Property(b => b.Date)
+                        .HasDefaultValueSql("GETDATE()");
+
+            //add computed column 
+            modelBuilder.Entity<Employee>()
+                        .Property(b => b.DisplayName)
+                        .HasComputedColumnSql("[LastName] + ',' + [FirstName]");
 
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
