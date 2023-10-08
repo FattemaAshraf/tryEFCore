@@ -96,6 +96,12 @@ namespace TryEFCore
             //exclude table after creating, dont listen on it again
             //modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
 
+            //to add identity values (1,1)
+            //must delete column of id if it created 
+            modelBuilder.Entity<Department>()
+                        .Property(b => b.Id)
+                        .ValueGeneratedOnAdd();
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
@@ -103,6 +109,7 @@ namespace TryEFCore
         public DbSet<Blog> Blogs { get; set; }
 
         public DbSet<Book> Books { get; set; }
+
 
 
     }
