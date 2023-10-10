@@ -139,6 +139,46 @@ namespace TryEFCore
               .WithMany(b => b.Posts)
               .HasForeignKey(p => new { p.BlogUrl, p.Blogcomment })
               .HasPrincipalKey(b => new { b.Url, b.comment });
+
+            //Many to Many Relations
+            //generating New table with many to many - not have PostTags Class
+            modelBuilder.Entity<Post>()
+                        .HasMany(p => p.Tags)
+                        .WithMany(t => t.Posts)
+                        .UsingEntity(j => j.ToTable("PostTags")); // adding new table with postid and tagid
+                                                                  // (if dont created class)
+
+            //After Adding manyToManyClass - have PostTags Class
+            modelBuilder.Entity<Post>()
+                       .HasMany(p => p.Tags)
+                       .WithMany(t => t.Posts)
+                       .UsingEntity<PostTags>(
+                                  j => j
+                                  .HasOne(pt => pt.Tag)
+                                  .WithMany(t => t.PostTags)
+                                  .HasForeignKey(pt => pt.TagId),
+                                  j => j
+                                  .HasOne(pt => pt.Post)
+                                  .WithMany(t => t.PostTags)
+                                  .HasForeignKey(pt => pt.PostId),
+                                  j => j
+                                  .HasKey(t => new { t.PostId, t.TagId })
+                                  );
+
+            //Indirect Many To Many Relationship
+            modelBuilder.Entity<PostTags>()
+                      .HasKey(t => new { t.PostId, t.TagId });
+
+            modelBuilder.Entity<PostTags>()
+                                  .HasOne(pt => pt.Tag)
+                                  .WithMany(t => t.PostTags)
+                                  .HasForeignKey(pt => pt.TagId);
+
+            modelBuilder.Entity<PostTags>()
+                                .HasOne(pt => pt.Post)
+                                .WithMany(t => t.PostTags)
+                                .HasForeignKey(pt => pt.PostId);
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }

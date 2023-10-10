@@ -14,5 +14,8 @@ namespace TryEFCore.Models
         public int BlogId { get; set; } //foreign key  //if you delete it,
                                         //you will create constrain also ==> called shadow reference
         public Blog Blog { get; set; } //reference navigation property //if you delete it, can't create constrain-navigation
+        public ICollection<Tag> Tags { get; set; }
+        public List<PostTags> PostTags { get; set; }
+
     }
 }
