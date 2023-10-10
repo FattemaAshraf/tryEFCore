@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TryEFCore.Migrations
 {
     /// <inheritdoc />
-    public partial class intialCreate : Migration
+    public partial class initCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace TryEFCore.Migrations
                 schema: "blogging",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    BlogId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BlogUrl = table.Column<string>(type: "varchar(200)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
@@ -42,7 +42,7 @@ namespace TryEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +77,28 @@ namespace TryEFCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogImage",
+                schema: "blogging",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BlogForeginKey = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogImage_Blogs_BlogForeginKey",
+                        column: x => x.BlogForeginKey,
+                        principalSchema: "blogging",
+                        principalTable: "Blogs",
+                        principalColumn: "BlogId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 schema: "blogging",
                 columns: table => new
@@ -94,9 +116,16 @@ namespace TryEFCore.Migrations
                         column: x => x.BlogId,
                         principalSchema: "blogging",
                         principalTable: "Blogs",
-                        principalColumn: "Id",
+                        principalColumn: "BlogId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogImage_BlogForeginKey",
+                schema: "blogging",
+                table: "BlogImage",
+                column: "BlogForeginKey",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_BlogId",
@@ -110,6 +139,10 @@ namespace TryEFCore.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AuditEntry",
+                schema: "blogging");
+
+            migrationBuilder.DropTable(
+                name: "BlogImage",
                 schema: "blogging");
 
             migrationBuilder.DropTable(

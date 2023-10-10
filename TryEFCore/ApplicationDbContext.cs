@@ -98,9 +98,9 @@ namespace TryEFCore
 
             //to add identity values (1,1)
             //must delete column of id if it created 
-            modelBuilder.Entity<Department>()
-                        .Property(b => b.Id)
-                        .ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Department>()
+            //            .Property(b => b.Id)
+            //            .ValueGeneratedOnAdd();
 
             //relation one to one
             modelBuilder.Entity<Blog>()
@@ -108,6 +108,37 @@ namespace TryEFCore
                        .WithOne(l => l.Blog)
                        .HasForeignKey<BlogImage>(i => i.BlogForeginKey);
 
+            //relation one to many 
+            modelBuilder.Entity<Blog>()
+                        .HasMany(b => b.Posts)
+                        .WithOne();
+
+            //reation many to one
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.Blog)
+                .WithMany(b => b.Posts);
+
+            //add navigation if dont write it --
+            //deleted navigation property blog/lists<post> posts
+            modelBuilder.Entity<Post>()
+                .HasOne<Blog>()
+                .WithMany()
+                .HasForeignKey(p => p.BlogId);
+            //.HasConstraintName("FK_Posts_Blog"); //if you wana name the name of constrain (not recommended)
+
+            //if wanna change the foregn key not id ==> uniqueConstraint
+            modelBuilder.Entity<Post>()
+               .HasOne(p => p.Blog)
+               .WithMany(b => b.Posts)
+               .HasForeignKey(p => p.BlogUrl)
+               .HasPrincipalKey(b => b.Url);
+
+            //or composite principles keys
+            modelBuilder.Entity<Post>()
+              .HasOne(p => p.Blog)
+              .WithMany(b => b.Posts)
+              .HasForeignKey(p => new { p.BlogUrl, p.Blogcomment })
+              .HasPrincipalKey(b => new { b.Url, b.comment });
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }

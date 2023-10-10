@@ -10,7 +10,7 @@ namespace TryEFCore.Models
     public class Department
     {
         //to add identity values (1,1)
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public byte Id { get; set; }
 
         [Required]

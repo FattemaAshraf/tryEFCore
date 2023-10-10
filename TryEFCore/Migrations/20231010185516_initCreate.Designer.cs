@@ -12,8 +12,8 @@ using TryEFCore;
 namespace TryEFCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231008153349_intialCreate")]
-    partial class intialCreate
+    [Migration("20231010185516_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,11 +49,11 @@ namespace TryEFCore.Migrations
 
             modelBuilder.Entity("TryEFCore.Models.Blog", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogId"));
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
@@ -71,9 +71,32 @@ namespace TryEFCore.Migrations
                         .HasColumnType("varchar(200)")
                         .HasColumnName("BlogUrl");
 
-                    b.HasKey("Id");
+                    b.HasKey("BlogId");
 
                     b.ToTable("Blogs", "blogging");
+                });
+
+            modelBuilder.Entity("TryEFCore.Models.BlogImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogForeginKey")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogForeginKey")
+                        .IsUnique();
+
+                    b.ToTable("BlogImage", "blogging");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Book", b =>
@@ -151,6 +174,17 @@ namespace TryEFCore.Migrations
                     b.ToView("selectedPosts", "blogging");
                 });
 
+            modelBuilder.Entity("TryEFCore.Models.BlogImage", b =>
+                {
+                    b.HasOne("TryEFCore.Models.Blog", "Blog")
+                        .WithOne("BlogImage")
+                        .HasForeignKey("TryEFCore.Models.BlogImage", "BlogForeginKey")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
             modelBuilder.Entity("TryEFCore.Models.Post", b =>
                 {
                     b.HasOne("TryEFCore.Models.Blog", "Blog")
@@ -164,6 +198,9 @@ namespace TryEFCore.Migrations
 
             modelBuilder.Entity("TryEFCore.Models.Blog", b =>
                 {
+                    b.Navigation("BlogImage")
+                        .IsRequired();
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
