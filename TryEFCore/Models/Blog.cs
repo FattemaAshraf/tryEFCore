@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TryEFCore.Models
 {
+    [Index(nameof(Url), IsUnique =true)]
+    //[Index(nameof(Url),nameof(BlogId))] //composite index
+
+
     public class Blog //parent or principles table
     {
         public int BlogId { get; set; } //principle keeyy

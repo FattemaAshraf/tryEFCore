@@ -179,6 +179,19 @@ namespace TryEFCore
                                 .WithMany(t => t.PostTags)
                                 .HasForeignKey(pt => pt.PostId);
 
+            //adding index -- interview Question -- bookIndex
+            modelBuilder.Entity<Blog>()
+                .HasIndex(b => b.Url)
+                .IsUnique()
+                .HasDatabaseName("Index_Url") // naming index 
+                .HasFilter("[Ur] is not null "); // "null"  filteriation for allow null or not
+
+            //adding composite index -- interview Question -- bookIndex
+            modelBuilder.Entity<Blog>()
+                .HasIndex(b => new { b.Url, b.BlogId });
+
+
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
