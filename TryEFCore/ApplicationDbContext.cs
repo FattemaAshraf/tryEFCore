@@ -190,7 +190,14 @@ namespace TryEFCore
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => new { b.Url, b.BlogId });
 
+            //adding sequence shared on all classes, inserted automatically
+            modelBuilder.HasSequence<int>("ActionNumber", schema:"shared" )
+                        .StartsAt(1000)
+                        .IncrementsBy(5);
 
+            modelBuilder.Entity<AuditEntry>()
+                .Property(b => b.Action)
+                .HasDefaultValueSql("NEXT VALUE FOR shared.ActionNumber ");
 
         }
         //add entity to model (3)

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TryEFCore.Models
 {
-    [Index(nameof(Url), IsUnique =true)]
+    //[Index(nameof(Url), IsUnique =true)] is true means its not repeateed
     //[Index(nameof(Url),nameof(BlogId))] //composite index
 
 
