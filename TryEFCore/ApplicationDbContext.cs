@@ -199,6 +199,12 @@ namespace TryEFCore
                 .Property(b => b.Action)
                 .HasDefaultValueSql("NEXT VALUE FOR shared.ActionNumber ");
 
+            //data seeding in modelbuider//to insert data in table // must write ID
+            modelBuilder.Entity<Blog>()
+                .HasData(new Blog { BlogId=1, Rating ="2"},
+                         new Blog { BlogId=2, Rating ="4"});
+
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
