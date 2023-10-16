@@ -11,6 +11,7 @@ namespace TryEFCore
             _context.Add(emp);
             _context.SaveChanges();*/
 
+            #region | Select- find first last single |
             //select all
             /*var stocks = _context.MockData.ToList();
             foreach(var stock in stocks)
@@ -20,19 +21,39 @@ namespace TryEFCore
             var stock = _context.MockData.Find(10);
             Console.WriteLine($"ID: {stock.id} Name : {stock.first_name}");
 
-            //single(); for identity data but make exception if
+            //single(); for identity data but make exception if //sequence sql no elements
             //didn't found data so we use SingleOrDefault(); default make null value
             var stockSingle = _context.MockData.SingleOrDefault(m => m.id == 10);
             Console.WriteLine(stockSingle == null ? "not found" : $"ID: {stockSingle.id} Name : {stockSingle.first_name}");
 
-            //first(); //first item 
+            //first(); //first item //sequence sql no elements
             //FirstOrDefault();  //using default if didn't need exception need null value
             var stockFirst = _context.MockData.First(m => m.id > 10);
             Console.WriteLine($"ID: {stockFirst.id} Name : {stockFirst.first_name}");
 
-            //last(); //last item must using orderby // exception using lastOrDefault();
+            //last(); //last item must using orderby //sequence sql no elements
+            // exception using lastOrDefault();
             var stocksOdrdered = _context.MockData.OrderBy(m => m.first_name).Last(m => m.id > 20);
             Console.WriteLine(stocksOdrdered == null ? "not found" : $"ID: {stocksOdrdered.id} Name : {stocksOdrdered.first_name}");
+            #endregion
+
+            #region |filteration by where|
+            //where().tolist();
+            var stocksFilteration = _context.MockData.Where(m => m.id >10 && m.first_name.StartsWith("A")).ToList();
+            //fiteration in database before come to front app
+            //goes to server profider
+            foreach (var stockF in stocksFilteration)
+                Console.WriteLine($"id:{stockF.id} name {stockF.first_name}");
+            #endregion
+
+            #region Any vs All
+            //Any(); //boolean value true if table have rows, false if don't have
+            //Any(criteria) // if you wanna check ciriteria is existed or not
+
+            //All(criteria); must cirteria -- must all rows match creiteria
+            #endregion
+
+
 
             #region EF Descussion
             //Entity Framework Core 
