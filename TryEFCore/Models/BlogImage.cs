@@ -11,7 +11,7 @@ namespace TryEFCore.Models
 
         public byte[] Image { get; set; }
 
-        //[ForeignKey("BlogForeginKey")] if the name not BlogId you dont need foreginKey dataanotation
+        [ForeignKey("BlogForeginKey")] //if the name not BlogId you dont need foreginKey dataanotation
         public Blog Blog { get; set; } // navigation property
     }
 }

@@ -6,10 +6,33 @@ namespace TryEFCore
         static void Main(string[] args)
         {
             var _context = new ApplicationDbContext { };
-            var emp = new Employee { FirstName = "Fatma" , LastName="Ashraf"};
+            /*var emp = new Employee { FirstName = "Fatma" , LastName="Ashraf"};
 
             _context.Add(emp);
-            _context.SaveChanges();
+            _context.SaveChanges();*/
+
+            //select all
+            /*var stocks = _context.MockData.ToList();
+            foreach(var stock in stocks)
+                Console.WriteLine(stock.first_name);*/
+
+            //using find(); //if the data more than one
+            var stock = _context.MockData.Find(10);
+            Console.WriteLine($"ID: {stock.id} Name : {stock.first_name}");
+
+            //single(); for identity data but make exception if
+            //didn't found data so we use SingleOrDefault(); default make null value
+            var stockSingle = _context.MockData.SingleOrDefault(m => m.id == 10);
+            Console.WriteLine(stockSingle == null ? "not found" : $"ID: {stockSingle.id} Name : {stockSingle.first_name}");
+
+            //first(); //first item 
+            //FirstOrDefault();  //using default if didn't need exception need null value
+            var stockFirst = _context.MockData.First(m => m.id > 10);
+            Console.WriteLine($"ID: {stockFirst.id} Name : {stockFirst.first_name}");
+
+            //last(); //last item must using orderby // exception using lastOrDefault();
+            var stocksOdrdered = _context.MockData.OrderBy(m => m.first_name).Last(m => m.id > 20);
+            Console.WriteLine(stocksOdrdered == null ? "not found" : $"ID: {stocksOdrdered.id} Name : {stocksOdrdered.first_name}");
 
             #region EF Descussion
             //Entity Framework Core 
@@ -93,7 +116,7 @@ namespace TryEFCore
 
             #region Insert ,update,Delete
             //CompanyModel db = new();
-            
+
             //var e1 = new Employee { Name = "Ziad", Address = "Aswan", Age = 22, DeptId = 2, Email = "Z@z.z" ,Salary=1234};
             //db.Add(e1);
 
