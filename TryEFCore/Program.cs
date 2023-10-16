@@ -71,9 +71,20 @@ namespace TryEFCore
             //count(filteration criteria) pust citeria on it easy
             //LongCount() int 64
             //sum(); sum of rows used only on int column, where before it for filteraion
-           
+
 
             //max(); , Min(); using in int and string columns 
+            #endregion
+
+            #region |Data Sorting by order by|
+            var stocksOrderedAsc = _context.MockData.OrderBy(m => m.first_name).ToList();
+            var stocksOrderedDes = _context.MockData.OrderByDescending(m => m.first_name).ToList();
+            var stocksOrderedAscThenBy = _context.MockData
+                .OrderBy(m => m.first_name) // ordering names as group
+                .ThenBy(m => m.gender) // sorting gender in nestingGroupname  thenByDescinding
+                .ToList();
+            foreach (var ascStock in stocksOrderedAsc)
+                Console.WriteLine($"id: {ascStock.id} name: {ascStock.first_name}");
             #endregion
 
             #region EF Descussion
