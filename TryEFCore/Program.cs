@@ -53,7 +53,18 @@ namespace TryEFCore
             //All(criteria); must cirteria -- must all rows match creiteria
             #endregion
 
+            #region |Append vs Prepend|  happened in client side not in data
+            //append in last
+            //prepend in first
+            var stocksAppended = _context.MockData
+                .Where(m => m.id > 10 && m.first_name.StartsWith("A"))
+                .ToList()
+                .Append(new MockData { id = 234 , first_name="Fatma Ashraf"});
 
+            foreach (var st in stocksAppended)
+                Console.WriteLine($"id:{st.id} name {st.first_name}");
+
+            #endregion
 
             #region EF Descussion
             //Entity Framework Core 
