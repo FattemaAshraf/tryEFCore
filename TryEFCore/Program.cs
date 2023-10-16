@@ -66,6 +66,16 @@ namespace TryEFCore
 
             #endregion
 
+            #region |Average vs count vs sum| |Min vs Max|
+            //average(creitera on int only) using where before it to fiter data 
+            //count(filteration criteria) pust citeria on it easy
+            //LongCount() int 64
+            //sum(); sum of rows used only on int column, where before it for filteraion
+           
+
+            //max(); , Min(); using in int and string columns 
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
