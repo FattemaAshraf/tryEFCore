@@ -128,6 +128,15 @@ namespace TryEFCore
                 Console.WriteLine($"Number Page: {PaperNumber} id: {page.id} name: {page.first_name}");
             #endregion
 
+            #region |Group By|
+            //grouping column merging all same value in one
+            var groupingStock = _context.MockData.GroupBy(m => m.gender)
+                                                 .Select(m => new { Name = m.Key, count = m.Count() });
+                 //after merging we don't have just key (name) and method to count 
+                 // if data integer you can use avg(); and sum();
+            foreach (var g in groupingStock)
+                Console.WriteLine($"Name {g.Name} count {g.count}");
+            #endregion
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
