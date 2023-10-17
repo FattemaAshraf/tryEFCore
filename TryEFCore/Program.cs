@@ -94,15 +94,43 @@ namespace TryEFCore
 
             foreach (var slected in selectedStocks)
                 Console.WriteLine($"{slected.stockId} - Name {slected.stockName}");    //selected and changed the name columns     
+
+            //distinct();  
+            var selectedStocks3 = _context.MockData.Distinct().ToList(); // all data
+            //to prevent the duplicatation >> must with select(); based on selected columns
+            var selectedStocks4 = _context.MockData.Select(m => new { m.id, m.first_name })
+                                                   .Distinct()
+                                                   .ToList(); 
+            foreach (var slected4 in selectedStocks4) 
+                Console.WriteLine($"{slected4.id} - Name {slected4.first_name}");
+
+
+            #endregion
+
+            #region |Take or Skip|
+            //Pagination
+            var skipedStocks = _context.MockData.Skip(10).Take(10).ToList();
+            //using in pageNumber and page size
+            //make method in IRepository
+            //public static List<MockData> GetData(int PaperNumber, int PaperSize)
+            //{
+            //    var _context = new ApplicationDbContext { };
+
+            //    return _context.MockData
+            //           .Skip((PaperNumber - 1) * PaperSize)
+            //           .Take(PaperSize)
+            //           .ToList();
+            //}
+            int PaperNumber = 2;
+            int PaperSize = 5;
+            var paginationStocks = GetData(PaperNumber, PaperSize);
+            foreach (var page in paginationStocks)
+                Console.WriteLine($"Number Page: {PaperNumber} id: {page.id} name: {page.first_name}");
             #endregion
 
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
-
-
-
-
             //When install ef6 -> you install ALL Libraries
             //that related to ef
             //ef to oracle
@@ -192,6 +220,16 @@ namespace TryEFCore
             //db.SaveChanges();
 
             #endregion
+        }
+        //pagination Method
+        public static List<MockData> GetData(int PaperNumber, int PaperSize)
+        {
+            var _context = new ApplicationDbContext { };
+
+            return _context.MockData
+                   .Skip((PaperNumber - 1) * PaperSize)
+                   .Take(PaperSize)
+                   .ToList();
         }
     }
 }
