@@ -87,6 +87,15 @@ namespace TryEFCore
                 Console.WriteLine($"id: {ascStock.id} name: {ascStock.first_name}");
             #endregion
 
+            #region |Select();|
+            var selectedStocks = _context.MockData.Select(m=> new {stockId = m.id, stockName = m.first_name}).ToList();
+            var selectedStocks1 = _context.MockData.Select(m => new { m.id, m.first_name }).ToList();
+            var selectedStocks2 = _context.MockData.Select(m => new Blog { BlogId = m.id, Url = m.first_name }).ToList();
+
+            foreach (var slected in selectedStocks)
+                Console.WriteLine($"{slected.stockId} - Name {slected.stockName}");    //selected and changed the name columns     
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
