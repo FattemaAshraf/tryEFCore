@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace TryEFCore.Models
 {
-    [Table("Posts", Schema = "blogging")]
+    //[Table("Posts", Schema = "blogging")]
     public class Post //dependent entity
     {
         public int Id { get; set; } 

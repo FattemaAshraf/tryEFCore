@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TryEFCore;
 
@@ -11,9 +12,11 @@ using TryEFCore;
 namespace TryEFCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018222623_ayaa7aga")]
+    partial class ayaa7aga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace TryEFCore.Migrations
 
                     b.HasIndex("NationalityId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Blog", b =>
@@ -221,7 +224,7 @@ namespace TryEFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationalities");
+                    b.ToTable("Nationality");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Post", b =>

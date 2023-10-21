@@ -210,16 +210,24 @@ namespace TryEFCore
             //-contect nameDataClass
             //-DataAnnotation (if you )
 
+            modelBuilder.Entity<Blog>().ToTable("Blogs", b => b.ExcludeFromMigrations());
+            modelBuilder.Entity<Post>().ToTable("Posts", b => b.ExcludeFromMigrations());
+            modelBuilder.Entity<MockData>().ToTable("MockData", b => b.ExcludeFromMigrations());
 
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
-        //add entity to model navigate on post list and make table (2)
+        ////add entity to model navigate on post list and make table (2)
         public DbSet<Blog> Blogs { get; set; }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<Nationality> Nationalities { get; set; }
 
         public DbSet<MockData> MockData { get; set; }
+
+
 
 
 

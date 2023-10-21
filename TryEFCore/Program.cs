@@ -19,7 +19,7 @@ namespace TryEFCore
 
             //using find(); //if the data more than one
             var stock = _context.MockData.Find(10);
-            Console.WriteLine($"ID: {stock.id} Name : {stock.first_name}");
+            //Console.WriteLine($"ID: {stock.id} Name : {stock.first_name}");
 
             //single(); for identity data but make exception if //sequence sql no elements
             //didn't found data so we use SingleOrDefault(); default make null value
@@ -28,13 +28,13 @@ namespace TryEFCore
 
             //first(); //first item //sequence sql no elements
             //FirstOrDefault();  //using default if didn't need exception need null value
-            var stockFirst = _context.MockData.First(m => m.id > 10);
-            Console.WriteLine($"ID: {stockFirst.id} Name : {stockFirst.first_name}");
+            //var stockFirst = _context.MockData.First(m => m.id > 10);
+            //Console.WriteLine($"ID: {stockFirst.id} Name : {stockFirst.first_name}");
 
             //last(); //last item must using orderby //sequence sql no elements
             // exception using lastOrDefault();
-            var stocksOdrdered = _context.MockData.OrderBy(m => m.first_name).Last(m => m.id > 20);
-            Console.WriteLine(stocksOdrdered == null ? "not found" : $"ID: {stocksOdrdered.id} Name : {stocksOdrdered.first_name}");
+            //var stocksOdrdered = _context.MockData.OrderBy(m => m.first_name).Last(m => m.id > 20);
+            //Console.WriteLine(stocksOdrdered == null ? "not found" : $"ID: {stocksOdrdered.id} Name : {stocksOdrdered.first_name}");
             #endregion
 
             #region |filteration by where|
@@ -132,11 +132,87 @@ namespace TryEFCore
             //grouping column merging all same value in one
             var groupingStock = _context.MockData.GroupBy(m => m.gender)
                                                  .Select(m => new { Name = m.Key, count = m.Count() });
-                 //after merging we don't have just key (name) and method to count 
-                 // if data integer you can use avg(); and sum();
+            //after merging we don't have just key (name) and method to count 
+            // if data integer you can use avg(criteria); and sum(criteria); //if you wnna put critera in sum and avg based on some columns
+
             foreach (var g in groupingStock)
                 Console.WriteLine($"Name {g.Name} count {g.count}");
             #endregion
+
+            #region |Join|
+            //left join - right join - inner join - full join
+            var Books = _context.Books.Join(_context.Authors, //table who join with
+                                            book => book.AuthorId, //column 1
+                                            author => author.Id,  //column 2 to join //navigation on author table
+                                            (book, author) => new  //all data the books variable contain
+                                            {
+                                                BookId = book.BookKey,
+                                                BookName = book.Name,
+                                                AuthorName = author.Name
+                                            });
+
+            foreach (var Book in Books)
+                Console.WriteLine($"Id: {Book.BookId} - Name: {Book.BookName} - Author: {Book.AuthorName}");
+
+
+
+            var BooksAuthNation = _context.Books.Join(_context.Authors, //table who join with
+                                          book => book.AuthorId, //column 1
+                                          author => author.Id,  //column 2 to join //navigation on author table
+                                          (book, author) => new  //all data the books variable contain
+                                          {
+                                              BookId = book.BookKey,
+                                              BookName = book.Name,
+                                              AuthorName = author.Name,
+                                              AuthorNationalityId = author.NationalityId
+                                          }).Join(
+                                                  _context.Nationalities,
+                                                  book => book.AuthorNationalityId,
+                                                  nationality => nationality.Id,
+                                                  (book, nationality) => new
+                                                  {
+                                                      book.BookId,
+                                                      book.AuthorName,
+                                                      book.BookName,
+                                                      AuthorNationality = nationality.Country
+                                                  }
+                                                 );
+
+            foreach (var B in BooksAuthNation)
+                Console.WriteLine($"Id: {B.BookId} - Name: {B.BookName} - Author: {B.AuthorName} - Nationality: {B.AuthorNationality}");
+
+            //if you want table with null values in right table ''left join''
+
+            var BooksAuthNationGroupJoin = _context.Books.Join(_context.Authors, //table who join with
+                                          book => book.AuthorId, //column 1
+                                          author => author.Id,  //column 2 to join //navigation on author table
+                                          (book, author) => new  //all data the books variable contain
+                                          {
+                                              BookId = book.BookKey,
+                                              BookName = book.Name,
+                                              AuthorName = author.Name,
+                                              AuthorNationalityId = author.NationalityId
+                                          }).GroupJoin(
+                                                  _context.Nationalities,
+                                                  book => book.AuthorNationalityId,
+                                                  nationality => nationality.Id,
+                                                  (book, nationality) => new
+                                                  {
+                                                      Book= book,
+                                                      Nationality = nationality
+                                                  }
+                                                 )
+                                          .SelectMany(
+                                                  b => b.Nationality.DefaultIfEmpty(), // if it null - intialize the default value
+                                                  (b,n) => new { b.Book , Nationality = n} // b.Book = Book in the first join method
+                                                  );
+
+            foreach (var Bo in BooksAuthNationGroupJoin)
+                //full join if have null value so you put null saftey ?
+                Console.WriteLine($"Id: {Bo.Book.BookId} - Name: {Bo.Book.BookName} - Author: {Bo.Book.AuthorName} - Nationality: {Bo.Nationality?.Country}");  
+
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy

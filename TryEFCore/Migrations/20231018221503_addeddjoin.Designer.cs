@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TryEFCore;
 
@@ -11,9 +12,11 @@ using TryEFCore;
 namespace TryEFCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018221503_addeddjoin")]
+    partial class addeddjoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace TryEFCore.Migrations
 
                     b.HasIndex("NationalityId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Blog", b =>
@@ -85,10 +88,7 @@ namespace TryEFCore.Migrations
 
                     b.HasKey("BlogId");
 
-                    b.ToTable("Blogs", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.BlogImage", b =>
@@ -201,10 +201,7 @@ namespace TryEFCore.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("MockData", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
+                    b.ToTable("MockData");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Nationality", b =>
@@ -221,7 +218,7 @@ namespace TryEFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationalities");
+                    b.ToTable("Nationality");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Post", b =>
@@ -255,10 +252,7 @@ namespace TryEFCore.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Posts", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
+                    b.ToTable("Posts", "blogging");
                 });
 
             modelBuilder.Entity("TryEFCore.Models.Tag", b =>
