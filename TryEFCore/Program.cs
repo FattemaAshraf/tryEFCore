@@ -246,6 +246,41 @@ namespace TryEFCore
             Console.WriteLine($"{BooksL1.Author.Name}");
 
             #endregion
+
+            #region |Explicit Loading| 
+            var explicitBook = _context.Books.SingleOrDefault(b => b.BookKey ==3);
+            _context.Entry(explicitBook).Reference(b => b.Author).Load();
+
+            Console.WriteLine($"used explicit loading :{explicitBook.Author.Name}");
+
+            //if navigation property is collection/list
+            var explicitBlog = _context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            _context.Entry(explicitBlog).Collection(b => b.Posts).Load();
+
+
+            //you can make query 
+            var explicitBlogQuery = _context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            _context.Entry(explicitBlogQuery)
+                    .Collection(b => b.Posts)
+                    .Query()  // adding query() function before condition
+                    .Where(p => p.Id < 1)
+                    .ToList();
+
+            var explicitBlogQuery1 = _context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            _context.Entry(explicitBlogQuery)
+                    .Collection(b => b.Posts)
+                    .Query()  // adding query() function before condition
+                    .Count();
+
+
+            foreach (var post in explicitBlogQuery1.Posts)
+            {
+                Console.WriteLine($"used explicit loading :{post.Title}");
+
+            }
+
+
+            #endregion
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
