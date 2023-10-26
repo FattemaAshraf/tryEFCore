@@ -15,6 +15,6 @@ namespace TryEFCore.Models
 
         [Required]
         public string Name { get; set; }
-        public List<Employee> Posts { get; set; }
+        public virtual List<Employee> Posts { get; set; }
     }
 }

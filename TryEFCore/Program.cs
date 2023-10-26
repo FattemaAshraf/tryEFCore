@@ -1,4 +1,6 @@
 ﻿
+using Castle.Components.DictionaryAdapter;
+
 namespace TryEFCore
 {
     internal class Program
@@ -235,7 +237,7 @@ namespace TryEFCore
             #region |Eager Loading - include();|
             //to intern in navigation property of object in model
             //*****make loading on application ******
-            //
+            //inner join in sql provider query
             var BooksL = _context.Books.SingleOrDefault(b => b.BookKey ==1);
             //Console.WriteLine($"{BooksL.Author.Name}"); //exception
 
@@ -281,6 +283,38 @@ namespace TryEFCore
 
 
             #endregion
+
+            #region |Lazy Loading|
+            //must installing proxies
+            var BooksLazy = _context.Books.SingleOrDefault(b => b.BookKey == 2);
+            //************  To Lazy Work  ***************
+            //step one 
+            //     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            //{
+            //    optionsBuilder.UseLazyLoadingProxies().UseSqlServer("");
+            //    base.OnConfiguring(optionsBuilder);
+            //}
+            //step two
+            //step two add virtual before navigate property
+            /*Lazy loading means delaying the loading of related data,
+             * until you specifically request for it. When using POCO
+             * entity types, lazy loading is achieved by creating instances
+             * of derived proxy types and then overriding virtual 
+             * properties to add the loading hook.*/
+
+
+            //difference between Eager and Lazy
+            //Eager loading all data and related data //inner join based
+            //Lazy loading only related data  //where in table of navigation property
+
+            //Virtual proxy – when accessing an object, call a virtual object
+            //with same interface as the real object. When the virtual object
+            //is called, load the real object, then delegate to it.
+
+              Console.WriteLine($"lazy Loading :{BooksLazy.Author.Name}");
+
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
@@ -376,13 +410,13 @@ namespace TryEFCore
         }
         //pagination Method
         public static List<MockData> GetData(int PaperNumber, int PaperSize)
-        {
-            var _context = new ApplicationDbContext { };
+{
+var _context = new ApplicationDbContext { };
 
-            return _context.MockData
-                   .Skip((PaperNumber - 1) * PaperSize)
-                   .Take(PaperSize)
-                   .ToList();
-        }
-    }
+return _context.MockData
+      .Skip((PaperNumber - 1) * PaperSize)
+      .Take(PaperSize)
+      .ToList();
+}
+}
 }

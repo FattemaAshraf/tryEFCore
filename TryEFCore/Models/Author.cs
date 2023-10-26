@@ -6,6 +6,6 @@
         public string Name { get; set; }
         public int NationalityId { get; set; }
 
-        public Nationality Nationality { get; set; }
+        public virtual Nationality Nationality { get; set; }
     }
 }

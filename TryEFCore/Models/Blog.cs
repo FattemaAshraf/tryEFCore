@@ -19,7 +19,7 @@ namespace TryEFCore.Models
 
         public DateTime Date { get; set; }
         public string Rating { get; set; }
-        public List<Post> Posts { get; set; } // collection navigation property
-        public BlogImage BlogImage { get; set; } //navigation property
+        public virtual List<Post> Posts { get; set; } // collection navigation property
+        public virtual BlogImage BlogImage { get; set; } //navigation property
     }
 }
