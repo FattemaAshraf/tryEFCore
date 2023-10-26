@@ -1,5 +1,6 @@
 ﻿
 using Castle.Components.DictionaryAdapter;
+using Microsoft.Data.SqlClient;
 
 namespace TryEFCore
 {
@@ -328,6 +329,14 @@ namespace TryEFCore
             Console.WriteLine($"{BooksL2.Author.Name}");
             #endregion
 
+            #region |join using linq|
+
+            #endregion
+
+            #region |SQL Statement or Stored Procedure |
+            var cookIdForStoredProcParameter = new SqlParameter("Id",1);
+            var bookSql = _context.Books.FromSqlRaw("sql statement/ stored procedure name").ToList();
+            #endregion
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
