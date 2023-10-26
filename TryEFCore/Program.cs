@@ -216,19 +216,35 @@ namespace TryEFCore
             #region |Tracking vs. NoTracking|
             //ef core tracking on you changes on data base - 
             //the price don't change and not save value in database
-            var NoTrackBook = _context.Books.AsNoTracking().SingleOrDefault(b => b.BookKey ==1);
-            NoTrackBook.Price = 110;
-            _context.SaveChanges();
+            //var NoTrackBook = _context.Books.AsNoTracking().SingleOrDefault(b => b.BookKey ==1);
+            //NoTrackBook.Price = 110;
+            //_context.SaveChanges();
 
-            //if you wanna change the behaviour of database
-            //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ////if you wanna change the behaviour of database
+            ////_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            //if you don't put .AsNoTracking();
-            var trackers = _context.ChangeTracker.Entries();
-            foreach (var tracker in trackers)
-            {
-                Console.WriteLine($"{tracker.Entity.ToString()}-{tracker.State}");
-            }
+            ////if you don't put .AsNoTracking();
+            //var trackers = _context.ChangeTracker.Entries(); 
+            //foreach (var tracker in trackers)
+            //{
+            //    Console.WriteLine($"{tracker.Entity.ToString()}-{tracker.State}"); //state of modified state in database and entity model 
+            //    //if put asnotracking the value no result
+            //}
+            #endregion
+
+            #region |Eager Loading - include();|
+            //to intern in navigation property of object in model
+            //*****make loading on application ******
+            //
+            var BooksL = _context.Books.SingleOrDefault(b => b.BookKey ==1);
+            //Console.WriteLine($"{BooksL.Author.Name}"); //exception
+
+            
+            var BooksL1 = _context.Books.Include(b => b.Author)
+                                        .ThenInclude(a => a.Nationality) //if wanna navigate on nationality in author table
+                                        .SingleOrDefault(b => b.BookKey == 2);
+            Console.WriteLine($"{BooksL1.Author.Name}");
+
             #endregion
             #region EF Descussion
             //Entity Framework Core 
