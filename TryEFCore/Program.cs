@@ -1,6 +1,7 @@
 ﻿
 using Castle.Components.DictionaryAdapter;
 using Microsoft.Data.SqlClient;
+using System.Linq;
 
 namespace TryEFCore
 {
@@ -215,6 +216,25 @@ namespace TryEFCore
                 Console.WriteLine($"Id: {Bo.Book.BookId} - Name: {Bo.Book.BookName} - Author: {Bo.Book.AuthorName} - Nationality: {Bo.Nationality?.Country}");
 
             #endregion
+            #region |join using linq|
+            var booksLinq = (from b in _context.Books
+                             join a in _context.Authors
+                             on b.AuthorId equals a.Id  //using System.Linq; to navigate on properties
+                             select new {a,b }).ToList();
+
+            var booksLinq1 = (from b in _context.Books
+                             join a in _context.Authors
+                             on b.AuthorId equals a.Id //using System.Linq; to navigate on properties
+                             join n in _context.Nationalities
+                             on a.NationalityId equals n.Id into authorNationality
+                             from an in authorNationality.DefaultIfEmpty() //to take the null value like groupjoin //leftjoin
+                              select new { 
+                                              BookId = b.BookKey,
+                                              bookName = b.Name,
+                                              authorName = a.Name
+                             
+                                         }).ToList();
+            #endregion
 
             #region |Tracking vs. NoTracking|
             //ef core tracking on you changes on data base - 
@@ -329,14 +349,13 @@ namespace TryEFCore
             Console.WriteLine($"{BooksL2.Author.Name}");
             #endregion
 
-            #region |join using linq|
-
-            #endregion
+            
 
             #region |SQL Statement or Stored Procedure |
             var cookIdForStoredProcParameter = new SqlParameter("Id",1);
-            var bookSql = _context.Books.FromSqlRaw("sql statement/ stored procedure name").ToList();
+            var bookSql = _context.Books.FromSqlRaw("sql statement/ stored procedure name", cookIdForStoredProcParameter).ToList();
             #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy

@@ -17,7 +17,8 @@ namespace TryEFCore
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True");
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True"
+                , o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
             base.OnConfiguring(optionsBuilder);
         }
 
