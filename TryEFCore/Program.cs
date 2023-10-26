@@ -237,7 +237,7 @@ namespace TryEFCore
             #region |Eager Loading - include();|
             //to intern in navigation property of object in model
             //*****make loading on application ******
-            //inner join in sql provider query
+            //based on join in sql provider query 
             var BooksL = _context.Books.SingleOrDefault(b => b.BookKey ==1);
             //Console.WriteLine($"{BooksL.Author.Name}"); //exception
 
@@ -304,15 +304,28 @@ namespace TryEFCore
 
 
             //difference between Eager and Lazy
-            //Eager loading all data and related data //inner join based
-            //Lazy loading only related data  //where in table of navigation property
+            //Eager loading all data and related data //inner join based  //will be loaded at single database call.
+            //Lazy loading only related data  //where in table of navigation property //It simply delays the loading of the related data, until you ask for it.
 
             //Virtual proxy – when accessing an object, call a virtual object
             //with same interface as the real object. When the virtual object
             //is called, load the real object, then delegate to it.
 
-              Console.WriteLine($"lazy Loading :{BooksLazy.Author.Name}");
+            Console.WriteLine($"lazy Loading :{BooksLazy.Author.Name}");
 
+            #endregion
+
+            #region |Split Queries|
+
+            var BooksL2 = _context.Books.Include(b => b.Author)
+                                        .AsSplitQuery()
+                                       .SingleOrDefault(b => b.BookKey == 2);
+            /*to split the query on two querys or more make fast performance*/
+            //if you wana behavior of context
+            /*  optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EFCore;Integrated Security=True"
+                , o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)); */
+            //.AsSingleQuery() if you wana single without change behaviour
+            Console.WriteLine($"{BooksL2.Author.Name}");
             #endregion
 
             #region EF Descussion
