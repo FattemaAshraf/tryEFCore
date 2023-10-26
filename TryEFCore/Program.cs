@@ -354,6 +354,14 @@ namespace TryEFCore
             #region |SQL Statement or Stored Procedure |
             var cookIdForStoredProcParameter = new SqlParameter("Id",1);
             var bookSql = _context.Books.FromSqlRaw("sql statement/ stored procedure name", cookIdForStoredProcParameter).ToList();
+
+            //data transorm class without visible on database for stored procedure, navigate on two or more tables and have complex statement
+            //BookDto class for properties of stored statement ms sql
+            //var bookSql1 = _context.BookDto.FromSqlRaw("sql statement/ stored procedure name", cookIdForStoredProcParameter).ToList();
+            //on model creating .entity<BookDto>(e => {e.HasNoKey().ToView(null);}); //migration is empaty/null
+
+
+
             #endregion
 
             #region EF Descussion
