@@ -368,12 +368,47 @@ namespace TryEFCore
             //modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Posts.Count > 0);
 
             var blogs = _context.Blogs.ToList();
-            foreach (var item in blogs)
-                Console.WriteLine($"{item.BlogId}"); //to select the blog of havve posts only
+            //foreach (var item in blogs)
+            //    Console.WriteLine($"{item.BlogId}"); //to select the blog of havve posts only
 
             var blogs1 = _context.Blogs.IgnoreQueryFilters().ToList(); //to ignore query filter
             #endregion
 
+            #region | Add New Record(s) and Save Related Data|
+            var nationality = new Nationality { Country = "new1" };
+            _context.Add(nationality);
+
+            var book = new Book
+            {
+                Name = "book new",
+                Author = new Author { Name = "Author new" } //add new author by navigate property
+            };
+
+            _context.Add(book);
+
+            var nationalites = new List<Nationality>
+            {
+                new Nationality { },
+                new Nationality { },
+                new Nationality { },
+            };
+
+            _context.AddRange(nationalites);  //if data is list not one object
+
+            var blog = new Blog
+            {
+                Posts = new List<Post>
+                {
+                    new Post { },
+                    new Post { },
+                    new Post { }
+                }
+            };
+            _context.Add(blog);
+
+            _context.SaveChanges();
+
+            #endregion
 
             #region EF Descussion
             //Entity Framework Core 
