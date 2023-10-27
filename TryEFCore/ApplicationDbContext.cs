@@ -215,6 +215,9 @@ namespace TryEFCore
             modelBuilder.Entity<Post>().ToTable("Posts", b => b.ExcludeFromMigrations());
             modelBuilder.Entity<MockData>().ToTable("MockData", b => b.ExcludeFromMigrations());
 
+            //Global Query Filter
+            modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Posts.Count > 0);
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }

@@ -1,6 +1,7 @@
 ﻿
 using Castle.Components.DictionaryAdapter;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace TryEFCore
@@ -349,8 +350,6 @@ namespace TryEFCore
             Console.WriteLine($"{BooksL2.Author.Name}");
             #endregion
 
-            
-
             #region |SQL Statement or Stored Procedure |
             var cookIdForStoredProcParameter = new SqlParameter("Id",1);
             var bookSql = _context.Books.FromSqlRaw("sql statement/ stored procedure name", cookIdForStoredProcParameter).ToList();
@@ -363,6 +362,18 @@ namespace TryEFCore
 
 
             #endregion
+
+            #region |Global Query Filters|
+            //Global Query Filter
+            //modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Posts.Count > 0);
+
+            var blogs = _context.Blogs.ToList();
+            foreach (var item in blogs)
+                Console.WriteLine($"{item.BlogId}"); //to select the blog of havve posts only
+
+            var blogs1 = _context.Blogs.IgnoreQueryFilters().ToList(); //to ignore query filter
+            #endregion
+
 
             #region EF Descussion
             //Entity Framework Core 
