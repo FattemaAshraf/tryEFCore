@@ -410,6 +410,38 @@ namespace TryEFCore
 
             #endregion
 
+            #region  |Update Record|
+
+            var selectedNationality = _context.Nationalities.Find(5);
+            selectedNationality.Country = "Updated Country";
+            _context.Update(selectedNationality);
+            _context.SaveChanges();
+
+            //-------------------------//
+            //domain model -- updated model from enduser
+            var updatedNationality = new Nationality { Id = 5 , Country = "Upadated Country"};
+
+            _context.Update(updatedNationality);
+
+            //_________________________//
+            var nationalities = _context.Nationalities.Where(n => n.Id > 2).ToList();
+            foreach (var item in nationalities)
+            {
+                item.Country = "updated Range";
+            }
+            _context.UpdateRange(nationalities);
+            //---//
+            var currentNationality = _context.Nationalities.Find(5);
+            var newNationality = new Nationality { Id = 5, Country = "New" };
+
+            _context.Entry(currentNationality).CurrentValues.SetValues(newNationality);
+            // if user don't send the latest columns, it set null value - if allow null
+            //_________________________//
+            //if you wanna prevent enduser to change the value of id
+            _context.Entry(newNationality).Property(p=> p.Id).IsModified = false;
+
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
