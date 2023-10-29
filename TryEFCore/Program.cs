@@ -525,6 +525,13 @@ namespace TryEFCore
             }
 
             #endregion
+
+            #region |Save Data with Sql Statment and Stored Procedures ExecuteSqlRaw|
+
+            var name = "عربي";
+            _context.Database.ExecuteSqlRaw($"prcAddBlog @Name=N'{name}'"); //N because name is arabic
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
