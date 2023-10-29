@@ -442,6 +442,43 @@ namespace TryEFCore
 
             #endregion
 
+            #region |Remove record & Delete Related Data|
+            var removedNationality = _context.Nationalities.Find(5);
+            _context.Remove(removedNationality);
+
+            var removednationalit = _context.Nationalities.Where(n => n.Id > 2).ToList();
+            _context.RemoveRange(removedNationality);
+
+            //__________________________________//
+
+            //Delete Related Data
+            //cascade delete
+            //OnDelete: ReferentialAction.Casacde  ==> default Behaviour in EF migration
+            //parent -- children delete
+
+
+            //Types:
+            //1- Casacde ==> delete parent and children
+            //2-restrict ==> must delete chldren before parent
+            //3-setNull ==> delete parent but make null for foreign key only --must put ? after type of property
+            
+
+
+            //        modelBuilder.Entity<Blog>()
+            //.HasMany(p => p.Posts)
+            //.WithOne(p => p.Blog)
+            //.OnDelete(DeleteBehavior.Restrict); //unhandeling exception when delete parent
+
+            var posts = _context.Posts.Where(p => p.BlogId == 2);
+            var Blog = _context.Blogs.Find(2);
+
+            _context.RemoveRange(posts); //children
+            _context.Remove(Blog); //parent
+            //___________________________________//
+
+            //BlogId nullable //Id of parent in child make it null int? BlogId
+
+            #endregion
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy

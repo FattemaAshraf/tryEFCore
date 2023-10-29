@@ -218,11 +218,21 @@ namespace TryEFCore
             //Global Query Filter
             modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Posts.Count > 0);
 
+
+            //change on delete related data
+            modelBuilder.Entity<Blog>()
+                .HasMany(p => p.Posts)
+                .WithOne(p => p.Blog)
+                .OnDelete(DeleteBehavior.Restrict); //unhandeling exception when delete parent
+
+
         }
         //add entity to model (3)
         public DbSet<Employee> Employees { get; set; }
         ////add entity to model navigate on post list and make table (2)
         public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
