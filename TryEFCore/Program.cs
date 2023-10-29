@@ -548,6 +548,19 @@ namespace TryEFCore
 
             #endregion
 
+            #region | EF7 Updates - Bulk Delete/Bulk Update|
+            //without make variable you can make cirteria before ExcuteDelete();
+            //as SQL Query
+            _context.Employees.Skip(5).ExecuteDelete();
+            _context.Employees.Where(e => e.Id > 3).ExecuteDelete();
+
+
+            _context.Employees
+                .Skip(5)
+                .ExecuteUpdate(x => x.SetProperty(e=> e.FirstName, e=> e.FirstName + " Updated"));
+
+
+            #endregion
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
