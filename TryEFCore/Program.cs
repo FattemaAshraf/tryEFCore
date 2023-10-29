@@ -1,8 +1,11 @@
 ﻿
 using Castle.Components.DictionaryAdapter;
+using Castle.Components.DictionaryAdapter.Xml;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Transactions;
 
 namespace TryEFCore
 {
@@ -474,9 +477,52 @@ namespace TryEFCore
 
             _context.RemoveRange(posts); //children
             _context.Remove(Blog); //parent
-            //___________________________________//
+                                   //___________________________________//
 
             //BlogId nullable //Id of parent in child make it null int? BlogId
+
+            #endregion
+
+            #region | Transactions|
+            //have many implemented statements
+
+            using var transaction = _context.Database.BeginTransaction();
+
+            try
+            {
+                _context.Add(new Blog { comment = "Transaction 1"});
+                _context.SaveChanges(); //must after every transaction
+
+                _context.Add(new Blog { comment = "Transaction 2" }); //error if have id
+                _context.Add(new Blog { comment = "Transaction 3" }); //error if have id
+                _context.SaveChanges(); //must after every transaction
+
+                transaction.Commit(); //implements try block if it right - related of saveChange function
+            }
+            catch (System.Exception)
+            {
+                transaction.Rollback(); //exception and don't try the tryBlock, dataBase not change
+            }
+
+            //-------------------------//
+            try
+            {
+                _context.Add(new Blog { comment = "Transaction 4" });
+                _context.SaveChanges(); //must after every transaction
+
+
+                transaction.CreateSavepoint("addFirstBlog");
+
+                _context.Add(new Blog { comment = "Transaction 5" });
+                _context.SaveChanges(); //must after every transaction
+
+                transaction.Commit(); //implements try block if it right
+            }
+            catch (System.Exception)
+            {
+                transaction.RollbackToSavepoint("addFirstBlog"); //must commit the save point if the second is false
+                transaction.Commit();
+            }
 
             #endregion
             #region EF Descussion
