@@ -532,6 +532,22 @@ namespace TryEFCore
             _context.Database.ExecuteSqlRaw($"prcAddBlog @Name=N'{name}'"); //N because name is arabic
             #endregion
 
+            #region | MaxBy vs MinBy|
+            List<Book> books = new List<Book>
+            {
+                new Book { Name = "Book1" , Price = 155},
+                new Book { Name = "Book2" , Price = 55},
+                new Book { Name = "Book3" , Price = 555}
+            };
+
+            //var cheapest = books.OrderBy(b => b.Price).First();
+            //var mostExpensive = books.OrderByDescending().First();
+
+            var cheapestMinBy = books.MinBy(b => b.Price);
+            var mostExpensiveMaxBy = books.MaxBy(b => b.Price);
+
+            #endregion
+
             #region EF Descussion
             //Entity Framework Core 
             //is more and more faster than ef6 legacy
